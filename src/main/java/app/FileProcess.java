@@ -80,8 +80,8 @@ public class FileProcess {
         if (saleListIsNotEmpty) {
             mostExpensiveSale = this.saleList.iterator().next();
 
-            for (Sale sale : this.saleList){
-                if (mostExpensiveSale.getTotal() > sale.getTotal()){
+            for (Sale sale : this.saleList) {
+                if (mostExpensiveSale.getTotal() > sale.getTotal()) {
                     mostExpensiveSale = sale;
                 }
                 sale.getSalesman().setTotalSales(sale.getTotal());
@@ -90,7 +90,7 @@ public class FileProcess {
             worstSalesman = this.salesmanList.iterator().next();
 
             for(Salesman salesman : this.salesmanList){
-                if (worstSalesman.getTotalSales() < salesman.getTotalSales()){
+                if (worstSalesman.getTotalSales() < salesman.getTotalSales()) {
                     worstSalesman = salesman;
                 }
             }
