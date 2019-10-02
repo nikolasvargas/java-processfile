@@ -2,6 +2,11 @@ package app;
 
 import utils.FileUtil;
 import java.io.File;
+import java.sql.SQLOutput;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Main {
     private static boolean LOOP = true;
@@ -40,24 +45,24 @@ public class Main {
 
         // Loop to check files and process
         do {
-            File[] fileList = inputPathDir.listFiles(pathName -> pathName.isFile() && pathName.getName().endsWith(".dat"));
+            File[] fileList = inputPathDir.listFiles(pathName ->
+                    pathName.isFile() && pathName.getName().endsWith(".dat"));
             boolean fileListIsNotEmpty = fileList.length > 0;
 
             if (fileListIsNotEmpty) {
-                for (File eachFile : fileList) {
-                    System.out.println("Processing file: " + eachFile.getName());
-                    FileProcess fileProcess = new FileProcess(eachFile);
-                    fileProcess.process();
-                    fileProcess.createOutputFile(outputPathDir);
-                    System.out.println("Moving file to: " + processedPathDir.getName());
-                    fileProcess.moveProcessedFile(processedPathDir);
-                    System.out.println("File processed: " + eachFile.getName());
-                }
+                File finalOutputPathDir = outputPathDir;
+                File finalProcessedPathDir = processedPathDir;
+                Arrays.stream(fileList)
+                        .map(FileProcess::new)
+                        .forEach(f -> {
+                            f.process();
+                            f.createOutputFile(finalOutputPathDir);
+                            f.moveProcessedFile(finalProcessedPathDir);
+                        });
             } else {
                 System.out.println("No new files found");
             }
 
-            // Wait 10 seconds to next verification
             if (LOOP) {
                 try {
                     System.out.println("Waiting 10s to next verification...");

@@ -3,12 +3,6 @@ package utils;
 import java.io.File;
 
 public class FileUtil {
-    /**
-     * Create a path if it doesn't exists
-     * @param path Path to be created
-     * @return File object that represents the path created
-     * @throws Exception
-     */
     public static File createPath(String path) throws Exception {
         File pathDir = new File(path);
         boolean pathNotExists = !pathDir.exists();

@@ -18,15 +18,10 @@ public class FileProcess {
     private Sale mostExpensiveSale = null;
     private Salesman worstSalesman = null;
 
-    /**
-     * @param currentFile File to be processed
-     */
     public FileProcess(File currentFile){
         this.currentFile = currentFile;
     }
-    /**
-     * Process current file based on problem rules
-     */
+
     public void process() {
         try {
             Scanner scanner = new Scanner(this.currentFile);
@@ -38,7 +33,7 @@ public class FileProcess {
                 boolean hasLinesToParse = parsedLine.length > 0;
 
                 if (hasLinesToParse){
-                    if (parsedLine[0].equals("001")){
+                    if (parsedLine[0].equals("001")) {
                         boolean SalesmanData = parsedLine.length == 4;
 
                         if (SalesmanData){
@@ -46,7 +41,7 @@ public class FileProcess {
                             salesmanList.add(salesman);
                         }
 
-                    } else if (parsedLine[0].equals("002")){
+                    } else if (parsedLine[0].equals("002")) {
                         boolean customerData = parsedLine.length == 4;
 
                         if (customerData){
@@ -54,7 +49,7 @@ public class FileProcess {
                             customerList.add(customer);
                         }
 
-                    } else if (parsedLine[0].equals("003")){
+                    } else if (parsedLine[0].equals("003")) {
                         boolean salesData = parsedLine.length == 4;
 
                         if (salesData){
@@ -72,9 +67,7 @@ public class FileProcess {
             e.printStackTrace();
         }
     }
-    /**
-     * Get Most Expensive Sale and Worst Salesman
-     */
+
     private void summarize() {
         boolean saleListIsNotEmpty = this.saleList.size() > 0;
         if (saleListIsNotEmpty) {
@@ -96,18 +89,13 @@ public class FileProcess {
             }
         }
     }
-    /**
-     * Move file to processed path
-     * @param pathTo path to move file
-     *
-     */
+
     public void moveProcessedFile(File pathTo) {
+        System.out.println("Moving file to: " + pathTo.getName());
         this.currentFile.renameTo(new File(pathTo.getAbsolutePath()+"//"+this.currentFile.getName()));
+        System.out.println("File processed: " + this.currentFile.getName());
     }
-    /**
-     * Create output file, according to the problem rules
-     * @param pathTo path to create file
-     */
+
     public void createOutputFile(File pathTo){
         String currentFileName = this.currentFile.getName();
         int lastIndex = currentFileName.lastIndexOf(".dat");
@@ -126,11 +114,7 @@ public class FileProcess {
         }
 
     }
-    /**
-     * Return the Salesman object that has the name informed
-     * @param string Salesman's name to be searched
-     * @return Salesman found or null otherwise
-     */
+
     public Salesman getByName(String string) {
         for (Salesman salesman : this.salesmanList){
             if (salesman.getName().equals(string)){
